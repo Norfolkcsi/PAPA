@@ -14,3 +14,5 @@ set scriptPath=%~dp0remote_loader.ps1
 :: Run it using PowerShell
 powershell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-Expression (Get-Content -Raw -Path '%scriptPath%')"
 
+:: Wait for user to press Enter
+powershell -Command "Read-Host 'Press Enter to exit'"
