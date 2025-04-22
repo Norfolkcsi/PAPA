@@ -8,7 +8,7 @@ $patPath = Join-Path $usbDrive.DriveLetter $gitHubTokenPath
 $token = (Get-Content $patPath -Raw).Trim()
 
 #Build URL
-$apiUrl = "https://api.github.com/repos/Norfolkcsi/PAPA/contents/script.ps1"
+$apiUrl = "https://api.github.com/repos/Norfolkcsi/PAPA/contents/main.ps1"
 $headers = @{
     Authorization = "Bearer $token"
     "User-Agent"  = "PowerShell"
