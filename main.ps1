@@ -8,6 +8,7 @@ function Get-WinGetUI {
         "Malwarebytes"     = "Malwarebytes.Malwarebytes"
         "Adware Cleaner"   = "Malwarebytes.AdwCleaner"
         "Glary"            = "Glarysoft.GlaryUtilities"
+        "Revo"             = "RevoUninstaller.RevoUninstaller"
     }
     
     $apps_browsers = @{
