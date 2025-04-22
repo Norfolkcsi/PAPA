@@ -114,7 +114,15 @@ function Get-WinGetUI {
     
         foreach ($item in $allChecked) {
             $name = $item.ToString()
-            $id = $apps_antimalware[$name] ?? $apps_browsers[$name] ?? $apps_misc[$name]
+            $id = if ($apps_antimalware.ContainsKey($name)) {
+    $apps_antimalware[$name]
+} elseif ($apps_browsers.ContainsKey($name)) {
+    $apps_browsers[$name]
+} elseif ($apps_misc.ContainsKey($name)) {
+    $apps_misc[$name]
+} else {
+    $null
+}
             Write-Log "Installing ${name}..."
             try {
                 $result = winget install --id $id --silent --accept-package-agreements --accept-source-agreements 2>&1
@@ -169,3 +177,4 @@ do {
 
 } while ($true)
 
+#updated
