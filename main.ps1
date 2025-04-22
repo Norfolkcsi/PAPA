@@ -169,4 +169,3 @@ do {
 
 } while ($true)
 
-Read-Host "Press enter to exit"
