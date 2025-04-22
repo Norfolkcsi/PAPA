@@ -152,7 +152,12 @@ do {
     $choice = Read-Host "Select an option"
 
     switch ($choice) {
-        "1" {t "Running Option B..." -ForegroundColor Green
+        "1" {
+            Write-Host "Starting WinGet UI" -ForegroundColor Green
+            [void](Get-WinGetUI)
+        }
+        "2" {
+            Write-Host "Running Option B..." -ForegroundColor Green
         }
         "3" {
             Write-Host "Running Option C..." -ForegroundColor Green
@@ -171,10 +176,5 @@ do {
     }
 
 } while ($true)
-            Write-Host "Starting WinGet UI" -ForegroundColor Green
-            [void](Get-WinGetUI)
-        }
-        "2" {
-            Write-Hos
 
-#updated again
+#should be working
