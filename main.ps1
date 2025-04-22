@@ -141,6 +141,7 @@ function Get-WinGetUI {
 }
 
 # Options
+$continueLoop = $true
 do {
     Clear-Host
     Write-Host "Main Menu"
@@ -164,7 +165,7 @@ do {
         }
         "0" {
             Write-Host "Exiting..." -ForegroundColor Green
-            break
+            $continueLoop = $false
         }
         default {
             Write-Warning "Invalid selection. Please try again."
@@ -175,6 +176,6 @@ do {
         Read-Host "Press Enter to return to the menu"
     }
 
-} while ($true)
+} while ($continueLoop -eq $true)
 
-#Test 3
+#Working
