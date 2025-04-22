@@ -1,6 +1,6 @@
 # PAPA (Perfect Automation PowerShell App)
 
-**PAPA** is a menu-driven PowerShell script designed to automate the setup of Windows environments using `winget`. It provides a clean interface for installing essential apps quickly and easily.
+**PAPA** is a menu-driven PowerShell script designed to automate the setup or tweak of Windows environments. It provides a clean interface for installing essential apps quickly and easily.
 
 ## Features
 
