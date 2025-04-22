@@ -1,5 +1,5 @@
 #USB Label and token file
-$usbDriveLabel = "WIN_11"
+$usbDriveLabel = "PAPA"
 $gitHubTokenPath = "rmm\PAT.txt"
 
 #Build token
@@ -14,7 +14,7 @@ $headers = @{
     "User-Agent"  = "PowerShell"
 }
 
-#Save raw remote script data to a string in memory only and pipe it to Invoke-Expression
+#Save the raw remote script data to memory in the format of a string and pipe it to Invoke-Expresstion
 $response = Invoke-RestMethod -Uri $apiUrl -Headers $headers
 $script = Invoke-RestMethod -Uri $response.download_url -Headers $headers
 Invoke-Expression $script
