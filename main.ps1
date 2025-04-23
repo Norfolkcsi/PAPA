@@ -141,13 +141,57 @@ function Get-WinGetUI {
     
 }
 
+#Remove big fish games
+function Get-BigFishUninstall {
+    
+    Write-Host "Starting Big Fish Game Manager removal..." -ForegroundColor Cyan
+    
+    # Attempt to uninstall via registry Uninstall entry
+    $uninstallKeyPaths = @(
+        "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*",
+        "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*",
+        "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*"
+    )
+    
+    foreach ($path in $uninstallKeyPaths) {
+        Get-ItemProperty $path -ErrorAction SilentlyContinue | Where-Object {
+            $_.DisplayName -like "*Big Fish Games*" -or $_.DisplayName -like "*Game Manager*"
+        } | ForEach-Object {
+            Write-Host "Found: $($_.DisplayName)" -ForegroundColor Yellow
+            if ($_.UninstallString) {
+                $uninstallCmd = $_.UninstallString
+                Write-Host "Running uninstall command..." -ForegroundColor Red
+                Start-Process -FilePath "cmd.exe" -ArgumentList "/c $uninstallCmd" -Wait
+            }
+        }
+    }
+    
+    # Define leftover paths to delete
+    $pathsToDelete = @(
+        "$env:ProgramFiles(x86)\Big Fish Games",
+        "$env:ProgramData\Big Fish",
+        "$env:APPDATA\Big Fish"
+    )
+    
+    foreach ($folder in $pathsToDelete) {
+        if (Test-Path $folder) {
+            Write-Host "Deleting folder: $folder" -ForegroundColor Green
+            Remove-Item -Path $folder -Recurse -Force -ErrorAction SilentlyContinue
+        } else {
+            Write-Host "Folder not found: $folder" -ForegroundColor DarkGray
+        }
+    }
+    
+    Write-Host "Cleanup complete. You can now reinstall Big Fish Game Manager." -ForegroundColor Cyan
+}
+
 # Options
 $continueLoop = $true
 do {
     Clear-Host
     Write-Host "Main Menu"
     Write-Host "1. Run WinGet UI"
-    Write-Host "2. Run Option B"
+    Write-Host "2. Remove big fish games"
     Write-Host "3. Run Option C"
     Write-Host "0. Exit"
     
@@ -159,7 +203,8 @@ do {
             [void](Get-WinGetUI)
         }
         "2" {
-            Write-Host "Running Option B..." -ForegroundColor Green
+            Write-Host "Running option 2" -ForegroundColor Green
+            Get-BigFishUninstall
         }
         "3" {
             Write-Host "Running Option C..." -ForegroundColor Green
