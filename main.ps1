@@ -185,6 +185,26 @@ function Get-BigFishUninstall {
     Write-Host "Cleanup complete. You can now reinstall Big Fish Game Manager." -ForegroundColor Cyan
 }
 
+#Get wifi passwords
+# Get a list of saved Wi-Fi profiles
+$wifiProfiles = netsh wlan show profiles | Select-String "All User Profile" | ForEach-Object { ($_ -split ": ")[1].Trim() }
+
+# Loop through each profile and extract the password
+function Get-WifiPass {
+
+    foreach ($profile in $wifiProfiles) {
+        $passwordInfo = netsh wlan show profile name="$profile" key=clear | Select-String "Key Content"
+        
+        if ($passwordInfo) {
+            $password = ($passwordInfo -split ": ")[1].Trim()
+        } else {
+            $password = "No password found (Open Network or Insufficient Permissions)"
+        }
+        
+        Write-Output "Wi-Fi: $profile | Password: $password"
+    }
+}
+
 # Options
 $continueLoop = $true
 do {
@@ -192,7 +212,7 @@ do {
     Write-Host "Main Menu"
     Write-Host "1. Run WinGet UI"
     Write-Host "2. Remove big fish games"
-    Write-Host "3. Run Option C"
+    Write-Host "3. Wifi Pass"
     Write-Host "0. Exit"
     
     $choice = Read-Host "Select an option"
@@ -208,6 +228,7 @@ do {
         }
         "3" {
             Write-Host "Running Option C..." -ForegroundColor Green
+            Get-WifiPass
         }
         "0" {
             Write-Host "Exiting..." -ForegroundColor Green
