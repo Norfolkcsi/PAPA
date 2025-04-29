@@ -205,13 +205,19 @@ function Get-WifiPass {
     }
 }
 
+#Install print Management console
+function Get-Print-Management-Console {
+    $cmd = "dism.exe /online /add-capability /capabilityname:Print.Management.Console~~~~0.0.1.0"
+    Invoke-Expression $cmd
+}
+
 # Options
 $continueLoop = $true
 do {
     Clear-Host
     Write-Host "Main Menu"
     Write-Host "1. Run WinGet UI"
-    Write-Host "2. Remove big fish games"
+    Write-Host "2. Run Get-Print-Management-Console"
     Write-Host "3. Wifi Pass"
     Write-Host "0. Exit"
     
@@ -223,8 +229,8 @@ do {
             [void](Get-WinGetUI)
         }
         "2" {
-            Write-Host "Running option 2" -ForegroundColor Green
-            Get-BigFishUninstall
+            Write-Host "Running Get-Print-Management-Console" -ForegroundColor Green
+            Get-Print-Management-Console
         }
         "3" {
             Write-Host "Running Option C..." -ForegroundColor Green
